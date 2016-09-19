@@ -19,8 +19,9 @@ public class JedisTest {
     @Before
     public void initJedis(){
         //given
-        JedisPool pool = new JedisPool(new JedisPoolConfig(), "120.25.251.32", 6379, 1000, "redis123");
+        JedisPool pool = new JedisPool(new JedisPoolConfig(), "120.25.251.32");
         jedis = pool.getResource();
+        jedis.auth("redis123");
         jedis.flushDB();
     }
 
@@ -166,7 +167,7 @@ public class JedisTest {
         }
         List<String> list = jedis.lrange("list", 0, -1);
         for (int i = 0; i < list.size(); i++) {
-           assertEquals("list"+i,list.get(i));
+            assertEquals("list"+i,list.get(i));
         }
     }
 
